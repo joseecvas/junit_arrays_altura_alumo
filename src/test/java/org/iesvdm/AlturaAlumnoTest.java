@@ -27,20 +27,24 @@ public class AlturaAlumnoTest {
     {
         double[]array = new double[0];
         double[] ArrayNuevo = AlturaAlumno.añadeAltura(array);
-        AlturaAlumno.modificaAltura(ArrayNuevo, 0, 1.7);
+        int pos=0;
+        AlturaAlumno.modificaAltura(ArrayNuevo, pos, 1.7);
         assertTrue(ArrayNuevo.length==array.length+1);
         assertTrue(ArrayNuevo[0]==1.7);
         assertArrayEquals(array, Arrays.copyOfRange(ArrayNuevo, 0, ArrayNuevo.length-1));
     }
     @Test
-    void buscaNombre()
+    void modificaAlturaFueraRango()
     {
-        String [] array = new String[1];
-        String nombre="";
-        String nombrearray="nombre1";
-        array[0]=nombrearray;
-        assertTrue(AlturaAlumno.buscaNombre(array, nombre)==-1);
-        assertTrue(AlturaAlumno.buscaNombre(array, nombrearray)==0);
+        //when
+        double[] array = new double[0];
+        double[] ArrayNuevo = Arrays.copyOf(array, array.length);
+        int pos = 1;
+        //do
+        AlturaAlumno.añadeAltura(array);
+        AlturaAlumno.modificaAltura(ArrayNuevo, pos, 1.7);
+        //then
+        assertArrayEquals(array, ArrayNuevo);
     }
     @Test
     void mostrar(){
@@ -50,14 +54,59 @@ public class AlturaAlumnoTest {
         arrayAltura[0]=1.7;
     }
     @Test
+    void buscaNombre_esta()
+    {
+        //when
+        String [] array = new String[1];
+        String nombre_esta = "Jose";
+        //do
+        array[0]=nombre_esta;
+        //then
+        assertTrue(AlturaAlumno.buscaNombre(array, nombre_esta)==0);
+    }
+    @Test
+    void buscaNombre_no_esta()
+    {
+        //when
+        String [] array = new String[1];
+        array[0]="Jose";
+        String nombre_no_esta = "Francisco";
+        //then
+        assertTrue(AlturaAlumno.buscaNombre(array, nombre_no_esta)==-1);
+    }
+    @Test
     void calculaMaximo(){
-        double [] array = {1.55, 1.87, 1.69};
+        //when
+        double [] array = new double[3];
+        //do
+        for(int i=0;i<array.length;i++) {
+            AlturaAlumno.añadeAltura(array);
+        }
+        AlturaAlumno.modificaAltura(array, 0, 1.6);
+        AlturaAlumno.modificaAltura(array, 1, 1.87);
+        AlturaAlumno.modificaAltura(array, 2, 1.71);
+        //then
         assertTrue(AlturaAlumno.calculaMaximo(array)[0]==1);
         assertTrue(AlturaAlumno.calculaMaximo(array)[1]==1.87);
     }
     @Test
-    void calculaMedia(){
-        double[] array = {1.0, 2.0, 3.0, 4.0, 5.0};
-        assertTrue(AlturaAlumno.calculaMedia(array)==3.0);
+    void calculaMaximoArrayVacio(){
+        //when
+        double [] resultado = {0.0, 0.0};
+        double[]vacio = new double[0];
+        //then
+        assertArrayEquals(AlturaAlumno.calculaMaximo(vacio), resultado);
+    }
+    @Test
+    void calculaMedia() {
+        double[] array = {1.71, 1.72, 1.73, 1.74, 1.75};
+        assertTrue(AlturaAlumno.calculaMedia(array) == 1.73);
+    }
+    @Test
+    void calculaMediaArrayVacio(){
+        //when
+        double[] array = new double[0];
+        //then
+        assertTrue(AlturaAlumno.calculaMedia(array) == 0);
     }
 }

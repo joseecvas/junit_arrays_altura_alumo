@@ -167,8 +167,8 @@ public class AlturaAlumno { // Recorrer dos arrays con la misma longitud
     {
         if(posicion>=0 && posicion<array.length) // Controlo que la posicion no esté fuera del rango
         {
-            array[posicion] = altura;
         }
+        array[posicion] = altura;
 
     }
 
@@ -237,7 +237,6 @@ public class AlturaAlumno { // Recorrer dos arrays con la misma longitud
             resultadoMaximo[0] = posicion;
             resultadoMaximo[1] = maximo;
         }
-
         return resultadoMaximo;
     }
 
