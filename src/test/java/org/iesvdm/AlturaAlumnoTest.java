@@ -1,23 +1,37 @@
 package org.iesvdm;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 public class AlturaAlumnoTest {
+    //Atributos
+    private final PrintStream standardOut = System.out;
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     @Test
+
     void añadeNombre(){
+        //when
         String[] array = new String[0];
         String nombre = "";
+        //do
         String[] ArrayNuevo = AlturaAlumno.añadeNombre(array, nombre);
+        //then
         assertTrue(ArrayNuevo[ArrayNuevo.length-1]==nombre);
         assertTrue(ArrayNuevo.length==array.length+1);
         assertArrayEquals(array, Arrays.copyOfRange(ArrayNuevo, 0, array.length));
     }
     @Test
     void añadeAltura(){
+        //when
         double[]array=new double[0];
-        double[]ArrayNuevo = AlturaAlumno.añadeAltura(array);
         double alturaPorDefecto = 1.5;
+        //do
+        double[]ArrayNuevo = AlturaAlumno.añadeAltura(array);
+        //then
         assertTrue(ArrayNuevo.length == array.length+1);
         assertTrue(ArrayNuevo[ArrayNuevo.length-1] == alturaPorDefecto);
         assertArrayEquals(array,Arrays.copyOfRange(ArrayNuevo,0, array.length));
@@ -25,10 +39,13 @@ public class AlturaAlumnoTest {
     @Test
     void modificaAltura()
     {
+        //when
         double[]array = new double[0];
         double[] ArrayNuevo = AlturaAlumno.añadeAltura(array);
         int pos=0;
+        //do
         AlturaAlumno.modificaAltura(ArrayNuevo, pos, 1.7);
+        //then
         assertTrue(ArrayNuevo.length==array.length+1);
         assertTrue(ArrayNuevo[0]==1.7);
         assertArrayEquals(array, Arrays.copyOfRange(ArrayNuevo, 0, ArrayNuevo.length-1));
@@ -47,12 +64,19 @@ public class AlturaAlumnoTest {
         assertArrayEquals(array, ArrayNuevo);
     }
     @Test
-    void mostrar(){
-        String[] arrayNombre = new String[1];
-        arrayNombre[0]="Jose";
-        Double[] arrayAltura = new Double[1];
-        arrayAltura[0]=1.7;
+    void givenNamesAndHeightsWhenMostrarThenPrint(){
+
+        System.setOut(new PrintStream(outputStreamCaptor));
+        // when
+        String[] arrayNombre = {"Jose"};
+        double[] arrayAltura = {1.7};
+        //do
+        AlturaAlumno.mostrar(arrayNombre, arrayAltura);
+        //then
+        assertEquals("Jose" + "\t|   " + "1.7\r\n", outputStreamCaptor.toString());
+        assertTrue(outputStreamCaptor.toString().contains("Jose"));
     }
+
     @Test
     void buscaNombre_esta()
     {
@@ -71,8 +95,10 @@ public class AlturaAlumnoTest {
         String [] array = new String[1];
         array[0]="Jose";
         String nombre_no_esta = "Francisco";
+        //do
+        int resultado = AlturaAlumno.buscaNombre(array, nombre_no_esta);
         //then
-        assertTrue(AlturaAlumno.buscaNombre(array, nombre_no_esta)==-1);
+        assertTrue(resultado==-1);
     }
     @Test
     void calculaMaximo(){
@@ -92,21 +118,29 @@ public class AlturaAlumnoTest {
     @Test
     void calculaMaximoArrayVacio(){
         //when
-        double [] resultado = {0.0, 0.0};
+        double [] resultado = new double [2];
         double[]vacio = new double[0];
+        //do
+        double [] maximo = AlturaAlumno.calculaMaximo(vacio);
         //then
-        assertArrayEquals(AlturaAlumno.calculaMaximo(vacio), resultado);
+        assertArrayEquals(maximo, resultado);
     }
     @Test
     void calculaMedia() {
+        //when
         double[] array = {1.71, 1.72, 1.73, 1.74, 1.75};
-        assertTrue(AlturaAlumno.calculaMedia(array) == 1.73);
+        //do
+        double media = AlturaAlumno.calculaMedia(array);
+        //then
+            assertTrue(media == 1.73);
     }
     @Test
     void calculaMediaArrayVacio(){
         //when
         double[] array = new double[0];
+        //do
+        double media = AlturaAlumno.calculaMedia(array);
         //then
-        assertTrue(AlturaAlumno.calculaMedia(array) == 0);
+        assertTrue(media == 0);
     }
 }
