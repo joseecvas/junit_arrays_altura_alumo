@@ -167,9 +167,8 @@ public class AlturaAlumno { // Recorrer dos arrays con la misma longitud
     {
         if(posicion>=0 && posicion<array.length) // Controlo que la posicion no esté fuera del rango
         {
+            array[posicion] = altura;
         }
-        array[posicion] = altura;
-
     }
 
     /**
