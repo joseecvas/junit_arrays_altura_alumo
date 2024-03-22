@@ -81,12 +81,9 @@ public class AlturaAlumnoTest {
     void buscaNombre_esta()
     {
         //when
-        String [] array = new String[1];
-        String nombre_esta = "Jose";
-        //do
-        array[0]=nombre_esta;
+        String [] array = {"Jose"};
         //then
-        assertTrue(AlturaAlumno.buscaNombre(array, nombre_esta)==0);
+        assertTrue(AlturaAlumno.buscaNombre(array, "Jose")==0);
     }
     @Test
     void buscaNombre_no_esta()
@@ -103,14 +100,7 @@ public class AlturaAlumnoTest {
     @Test
     void calculaMaximo(){
         //when
-        double [] array = new double[3];
-        //do
-        for(int i=0;i<array.length;i++) {
-            AlturaAlumno.añadeAltura(array);
-        }
-        AlturaAlumno.modificaAltura(array, 0, 1.6);
-        AlturaAlumno.modificaAltura(array, 1, 1.87);
-        AlturaAlumno.modificaAltura(array, 2, 1.71);
+        double [] array = {1.6, 1.87, 1.71};
         //then
         assertTrue(AlturaAlumno.calculaMaximo(array)[0]==1);
         assertTrue(AlturaAlumno.calculaMaximo(array)[1]==1.87);
@@ -118,29 +108,29 @@ public class AlturaAlumnoTest {
     @Test
     void calculaMaximoArrayVacio(){
         //when
-        double [] resultado = new double [2];
-        double[]vacio = new double[0];
+        double[]array = new double[0];
+        double [] resultadoExpected = new double [2];
         //do
-        double [] maximo = AlturaAlumno.calculaMaximo(vacio);
+        double [] maximo = AlturaAlumno.calculaMaximo(array);
         //then
-        assertArrayEquals(maximo, resultado);
+        assertArrayEquals(maximo, resultadoExpected);
     }
     @Test
     void calculaMedia() {
         //when
         double[] array = {1.71, 1.72, 1.73, 1.74, 1.75};
         //do
-        double media = AlturaAlumno.calculaMedia(array);
+        double mediaExpected = AlturaAlumno.calculaMedia(array);
         //then
-            assertTrue(media == 1.73);
+            assertTrue(mediaExpected == 1.73);
     }
     @Test
     void calculaMediaArrayVacio(){
         //when
         double[] array = new double[0];
         //do
-        double media = AlturaAlumno.calculaMedia(array);
+        double mediaExpected = AlturaAlumno.calculaMedia(array);
         //then
-        assertTrue(media == 0);
+        assertTrue(mediaExpected == 0);
     }
 }
